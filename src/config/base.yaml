@@ -1,0 +1,36 @@
+rd_seed: 1
+
+log_dir: log/main
+
+num_patches: 14
+
+max_epoch: 60
+checkpoint_epoch: -1
+
+
+emb_dim: 512
+
+per_write: 50
+
+
+
+
+optimizer:
+  type : Adam
+  lr   : 0.001
+  betas: [0.5, 0.999]
+  eps  : 0.000001
+  weight_decay: 0
+
+lr_scheduler:
+  type: WarmupCosineLR
+  max_iters: 200000
+  warmup_factor: 0.001
+  warmup_iters: 2000
+
+train_dataloader:
+  bs: 48
+  num_workers: 16
+  shuffle: True
+  drop_last: True
+  pin_memory: False
