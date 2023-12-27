@@ -45,6 +45,7 @@ class Solver(gorilla.solver.BaseSolver):
 
         self.per_write = cfg.per_write
 
+        # 加载预训练模型
         if cfg.checkpoint_epoch != -1:
             logger.info("=> loading checkpoint from epoch {} ...".format(cfg.checkpoint_epoch))
             checkpoint = os.path.join(cfg.log_dir, 'epoch_' + str(cfg.checkpoint_epoch) + '.pth')
@@ -113,8 +114,7 @@ class Solver(gorilla.solver.BaseSolver):
                 self.log_buffer.average(self.per_write)
                 prefix = '[{}/{}][{}/{}][{}] Train - '.format(
                     self.epoch, self.cfg.max_epoch, i, len(self.dataloaders["train"]), self.iter)
-                write_info = self.get_logger_info(
-                    prefix, dict_info=self.log_buffer._output)
+                write_info = self.get_logger_info(prefix, dict_info=self.log_buffer._output)
                 self.logger.info(write_info)
                 self.write_summary(self.log_buffer._output, mode)
             
@@ -126,6 +126,27 @@ class Solver(gorilla.solver.BaseSolver):
             self.iter += 1
 
 
+        dict_info_epoch = self.log_buffer.avg
+        self.log_buffer.clear()
+
+        return dict_info_epoch
+    
+    def evaluate(self):
+        mode = 'eval'
+        self.model.eval()
+
+        for i, data in enumerate(self.dataloaders["eval"]):
+            with torch.no_grad():
+                _, dict_info_step = self.step(data, mode)
+                self.log_buffer.update(dict_info_step)
+                if i % self.per_write == 0:
+                    self.log_buffer.average(self.per_write)
+                    prefix = '[{}/{}][{}/{}] Test - '.format(
+                        self.epoch, self.cfg.max_epoch, i, len(self.dataloaders["eval"]))
+                    write_info = self.get_logger_info(
+                        prefix, dict_info=self.log_buffer._output)
+                    self.logger.info(write_info)
+                    self.write_summary(self.log_buffer._output, mode)
         dict_info_epoch = self.log_buffer.avg
         self.log_buffer.clear()
 

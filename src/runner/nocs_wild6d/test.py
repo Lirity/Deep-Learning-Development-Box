@@ -83,7 +83,7 @@ if __name__ == "__main__":
     logger.info("=> creating model ...")
     model = nocs_wild6d_net.Net(cfg).cuda()
 
-    gorilla.solver.load_checkpoint(model=model, filename='log/main/epoch_60.pth')
+    gorilla.solver.load_checkpoint(model=model, filename='log/main/epoch_15.pth')
 
     model = model.eval()
 

@@ -17,12 +17,11 @@ import src.network.nocs_wild6d.net as nocs_wild6d_net
 import src.provider.nocs_wild6d.dataset as nocs_wild6d_dataset
 import src.runner.nocs_wild6d.solver as nocs_wild6d_solver
 
-
 def get_parser():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--gpus", type=str, default="0", help="gpu num")
-    parser.add_argument("--config", type=str, default="src/config/base.yaml", help="path to config file")
+    parser.add_argument("--config", type=str, default="src/config/nocs_wild6d/base.yaml", help="path to config file")
 
     args_cfg = parser.parse_args()
 
@@ -52,7 +51,10 @@ def init():
 
     cfg = gorilla.Config.fromfile(args.config)  # 读取配置文件(全局参数)
 
-    cfg.gpus = args.gpus
+    for key, value in args.__dict__.items():
+        setattr(cfg, key, value)
+
+    cfg.log_dir = os.path.join('log', cfg.project, cfg.experiment)
 
     # 指定日志记录地址
     if not os.path.isdir(cfg.log_dir):
@@ -90,7 +92,6 @@ if __name__ == "__main__":
     logger.warning("#Total parameters : {}".format(count_parameters))
 
     # Loss
-
     loss = nocs_wild6d_net.Loss(cfg).cuda()
    
     # Dataset

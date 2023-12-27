@@ -1,6 +1,8 @@
-rd_seed: 1
+project: nocs_wild6d
+experiment: pts_cls_2023_12_25
 
-log_dir: log/main
+
+rd_seed: 1
 
 num_patches: 14
 
