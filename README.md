@@ -30,6 +30,7 @@ pip install pyglet==1.5.0
 ---
 ``` bash
 MASTER
+├── doc # 笔记
 ├── data # 数据集
 │   ├── <data_a>
 │   └── <data_b>
