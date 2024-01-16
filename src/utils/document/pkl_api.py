@@ -6,3 +6,5 @@ def read_pkl(file_path):
     return data
 
 def write_pkl(data, file_path):
+    with open(file_path, 'wb') as file:
+        pickle.dump(data, file)

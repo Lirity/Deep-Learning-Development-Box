@@ -1,5 +1,4 @@
 # Deep Learning Development Box
-
 ---
 
 ## Requirements
