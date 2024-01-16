@@ -24,7 +24,7 @@ def get_parser():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--gpus", type=str, default="0", help="gpu num")
-    parser.add_argument("--config", type=str, default="src/config/base.yaml", help="path to config file")
+    parser.add_argument("--config", type=str, default="src/config/nocs_wild6d/base.yaml", help="path to config file")
 
     args_cfg = parser.parse_args()
 
@@ -57,6 +57,7 @@ def init():
     cfg.gpus = args.gpus
 
     # 指定日志记录地址
+    cfg.log_dir = os.path.join('log', cfg.project, cfg.experiment)
     if not os.path.isdir(cfg.log_dir):
         os.makedirs(cfg.log_dir)
     logger = get_logger(level_print=logging.INFO, level_save=logging.WARNING, path_file=cfg.log_dir + "/training_logger.log")
@@ -134,17 +135,38 @@ if __name__ == "__main__":
     category = np.array(label_list)
 
     # enbedding visualization
-    Y = tsne(embedding, 2, 50, 30.0)
-    y_1 = Y[np.where(category == 1)[0], :]
-    s_1 = plt.scatter(y_1[:, 0], y_1[:, 1], s=20, marker='o', c='tab:orange')
-    y_2 = Y[np.where(category == 2)[0], :]
-    s_2 = plt.scatter(y_2[:, 0], y_2[:, 1], s=20, marker='^', c='tab:blue')
-    y_3 = Y[np.where(category == 3)[0], :]
-    s_3 = plt.scatter(y_3[:, 0], y_3[:, 1], s=20, marker='s', c='tab:olive')
+    # Y = tsne(embedding, 2, 50, 30.0)
+    # y_1 = Y[np.where(category == 1)[0], :]
+    # s_1 = plt.scatter(y_1[:, 0], y_1[:, 1], s=20, marker='o', c='tab:orange')
+    # y_2 = Y[np.where(category == 2)[0], :]
+    # s_2 = plt.scatter(y_2[:, 0], y_2[:, 1], s=20, marker='^', c='tab:blue')
+    # y_3 = Y[np.where(category == 3)[0], :]
+    # s_3 = plt.scatter(y_3[:, 0], y_3[:, 1], s=20, marker='s', c='tab:olive')
 
-    plt.legend((s_1, s_2, s_3),
-            ('CAMERA25', 'REAL275', 'Wild6D'),
-            loc='best', ncol=1, fontsize=8, frameon=False)
-    plt.xticks([])
-    plt.yticks([])
+    # np.save('y_1.npy', y_1)
+    # np.save('y_2.npy', y_2)
+    # np.save('y_3.npy', y_3)
+
+    # plt.legend((s_1, s_2, s_3),
+    #         ('CAMERA25', 'REAL275', 'Wild6D'),
+    #         loc='best', ncol=1, fontsize=8, frameon=False)
+    # plt.xticks([])
+    # plt.yticks([])
+    # plt.savefig('visual_embedding.png', bbox_inches='tight')
+
+    # enbedding visualization
+    y_1 = np.load('y_1_1.npy')
+    s_1 = plt.scatter(y_1[:, 0], y_1[:, 1], s=10, marker='o', c='salmon')
+    y_2 = np.load('y_2_1.npy')
+    s_2 = plt.scatter(y_2[:, 0], y_2[:, 1], s=10, marker='^', c='mediumturquoise')
+    y_3 = np.load('y_3_1.npy')
+    s_3 = plt.scatter(y_3[:, 0], y_3[:, 1], s=10, marker='s', c='mediumpurple')
+    plt.grid(True, linestyle='--', linewidth=0.5)
+    # plt.legend((s_1, s_2, s_3),
+    #         ('CAMERA25', 'REAL275', 'Wild6D'),
+    #         loc='best', ncol=1, fontsize=0, frameon=False)
+
+
+    # plt.xticks([])
+    # plt.yticks([])
     plt.savefig('visual_embedding.png', bbox_inches='tight')

@@ -8,10 +8,10 @@ def vis_feature_map(featrue_map):
     将二维特征图可视化为RGB图像
 
     Parameters:
-    -featrue_map (numpy.array): 维度为[h, w, feat_dim]的特征图
+        featrue_map (numpy.array): 维度为[h, w, feat_dim]的特征图
 
     Returns:
-    None: 直接可视化出来
+        None: 直接可视化出来
     '''
     # 特征降维 对应RGB通道
     pca = PCA(n_components=3)   
