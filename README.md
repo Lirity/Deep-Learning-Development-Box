@@ -23,6 +23,9 @@ pip install matplotlib==3.8.0
 
 pip install trimesh==4.0.8
 pip install pyglet==1.5.0
+
+pip install sympy==1.12         # spherical harmonics related
+pip install h5py==3.10.0         # spherical harmonics related
 ```
 
 ## Directory Structure
