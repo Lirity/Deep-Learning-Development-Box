@@ -14,9 +14,6 @@ emb_dim: 512
 
 per_write: 50
 
-
-
-
 optimizer:
   type : Adam
   lr   : 0.001

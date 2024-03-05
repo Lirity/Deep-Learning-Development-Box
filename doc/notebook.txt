@@ -1,0 +1,11 @@
+scale = || size ||
+GT_Pose = [R * scale | t]
+Camera Space = GT_Pose @ Object Space
+
+Dataset: pts -> model
+RT = np.identity(4, dtype=np.float32)
+RT[:3, :3] = rotation * nocs_scale
+RT[:3, 3] = translation
+pcl_compl = transform_coordinates_3d(model.transpose(1, 0), RT).transpose(1, 0)
+data_dict['pcl_compl'] = torch.as_tensor(pcl_compl, dtype=torch.float32).contiguous()
+data_dict['pcl_all'] = torch.cat((data_dict['pcl_in'], data_dict['pcl_compl']), dim=0)

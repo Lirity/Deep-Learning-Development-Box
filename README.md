@@ -18,6 +18,8 @@ pip install xformers==0.0.16    # dinov2 related (requires torch==1.13.1)
 pip install triton==2.0.0       # dinov2 related
 
 utils
+pip install open3d==0.18.0
+
 pip install scikit-learn==1.3.2
 pip install matplotlib==3.8.0
 
@@ -37,24 +39,22 @@ MASTER
 │   ├── <data_a>
 │   └── <data_b>
 ├── src # 代码
-│   ├── config  # 配置文件
-│   │   └── <project_a> # 每个项目每次实验对应一个yaml
-│   │       ├── <experiment_a>.yaml
-│   │       └── <experiment_b>.yaml
 │   ├── module  # 网络常用的模块, 如Encoder, 与具体实验无关
 │   │   ├── <module_a>
 │   │   └── <module_b>
-│   ├── network
+│   ├── project  # 项目
 │   │   └── <project_a>
-│   │       └── net.py
-│   ├── provider
-│   │   └── <project_a> 
-│   │       └── dataset.py
-│   ├── runner
-│   │   └── <project_a>
-│   │       ├── train.py
-│   │       ├── test.py
-│   │       └── solver.py
+│   │       ├── config # 配置文件
+│   │       │   ├── <experiment_a>.yaml # 每次实验对应一个yaml
+│   │       │   └── <experiment_b>.yaml
+│   │       ├── network
+│   │       │   └── net.py
+│   │       ├── provider
+│   │       │   └── dataset.py
+│   │       └── runner
+│   │           ├── train.py
+│   │           ├── test.py
+│   │           └── solver.py
 │   ├── utils
 │   │   ├── document        # 文件io
 │   │   ├── geometry        # 几何变换
